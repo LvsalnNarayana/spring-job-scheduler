@@ -2,6 +2,7 @@ package com.example.job_execution_service.service;
 
 import com.example.job_execution_service.entity.JobLockEntity;
 import com.example.job_execution_service.repository.JobLockRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class JobLockService {
 
     private final JobLockRepository repository;

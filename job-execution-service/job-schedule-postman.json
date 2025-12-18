@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "Job Execution Service - Full Scheduler Test Suite",
+    "description": "Complete Postman collection to test DB-driven job scheduling, cron execution, retries, and execution history",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+  ],
+  "item": [
+    {
+      "name": "JOB SCHEDULES",
+      "item": [
+        {
+          "name": "Create Job - Subscription Expiry (Every 1 Minute)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobType\": \"SUBSCRIPTION_EXPIRY\",\n  \"referenceId\": \"{{subscriptionId}}\",\n  \"cronExpression\": \"0 */1 * * * *\",\n  \"maxRetry\": 3\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/job-schedules",
+              "host": [
+                "http://localhost:5000/api"
+              ],
+              "path": [
+                "job-schedules"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Job - Payment Retry (Every 1 Minute)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobType\": \"SUBSCRIPTION_PAYMENT_RETRY\",\n  \"referenceId\": \"{{subscriptionId}}\",\n  \"cronExpression\": \"0 */1 * * * *\",\n  \"maxRetry\": 5\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/job-schedules",
+              "host": [
+                "http://localhost:5000/api"
+              ],
+              "path": [
+                "job-schedules"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Job - Subscription Reminder (Every 2 Minutes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobType\": \"SUBSCRIPTION_REMINDER\",\n  \"referenceId\": \"{{subscriptionId}}\",\n  \"cronExpression\": \"0 */2 * * * *\",\n  \"maxRetry\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/job-schedules",
+              "host": [
+                "http://localhost:5000/api"
+              ],
+              "path": [
+                "job-schedules"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Disable Job Schedule",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:5000/api/job-schedules/{{jobScheduleId}}/disable",
+              "host": [
+                "http://localhost:5000/api"
+              ],
+              "path": [
+                "job-schedules",
+                "{{jobScheduleId}}",
+                "disable"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "JOB EXECUTIONS",
+      "item": [
+        {
+          "name": "Get All Job Executions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:5000/api/job-executions",
+              "host": [
+                "http://localhost:5000/api"
+              ],
+              "path": [
+                "job-executions"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
