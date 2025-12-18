@@ -1,0 +1,272 @@
+{
+  "info": {
+    "name": "Subscription Service - Scheduler + CRUD APIs",
+    "description": "Public CRUD APIs and internal scheduler APIs for Subscription Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+  ],
+  "item": [
+    {
+      "name": "INTERNAL - Process Expiring Subscriptions (Daily Job)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/internal/subscriptions/process-expiry?date=2025-01-01",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "internal",
+            "subscriptions",
+            "process-expiry"
+          ],
+          "query": [
+            {
+              "key": "date",
+              "value": "2025-01-01"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "INTERNAL - Retry Failed Payments (Retry Job)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/internal/subscriptions/retry-payments",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "internal",
+            "subscriptions",
+            "retry-payments"
+          ]
+        }
+      }
+    },
+    {
+      "name": "INTERNAL - Find Subscriptions Expiring Between (Reminder Job)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:4000/api/internal/subscriptions/expiring-between?startDate=2024-12-28&endDate=2025-01-03",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "internal",
+            "subscriptions",
+            "expiring-between"
+          ],
+          "query": [
+            {
+              "key": "startDate",
+              "value": "2024-12-28"
+            },
+            {
+              "key": "endDate",
+              "value": "2025-01-03"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "INTERNAL - Cleanup Expired Subscriptions (Maintenance Job)",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/internal/subscriptions/cleanup-expired?cutoffDate=2024-12-01",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "internal",
+            "subscriptions",
+            "cleanup-expired"
+          ],
+          "query": [
+            {
+              "key": "cutoffDate",
+              "value": "2024-12-01"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUBLIC - Create Subscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"user-101\",\n  \"startDate\": \"2025-01-01\",\n  \"expiryDate\": \"2025-02-01\",\n  \"autoRenew\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUBLIC - Get Subscription By ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUBLIC - Get All Subscriptions",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUBLIC - Update Subscription",
+      "request": {
+        "method": "PUT",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}?expiryDate=2025-03-01&autoRenew=false",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}"
+          ],
+          "query": [
+            {
+              "key": "expiryDate",
+              "value": "2025-03-01"
+            },
+            {
+              "key": "autoRenew",
+              "value": "false"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PUBLIC - Cancel Subscription",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}/cancel",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "cancel"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ACTION - Try Payment",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}/actions/try-payment",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "actions",
+            "try-payment"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ACTION - Cancel Subscription",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}/actions/cancel",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "actions",
+            "cancel"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ACTION - Force Expire Subscription",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}/actions/expire",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "actions",
+            "expire"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ACTION - Force Renew Subscription",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "http://localhost:4000/api/subscriptions/{{subscriptionId}}/actions/renew",
+          "host": [
+            "http://localhost:4000/api"
+          ],
+          "path": [
+            "subscriptions",
+            "{{subscriptionId}}",
+            "actions",
+            "renew"
+          ]
+        }
+      }
+    }
+  ]
+}
